@@ -1,1 +1,58 @@
 [2024-09-10T17:43:35.925555700] SELECT * FROM actor WHERE first_name LIKE '%ER'
+[2024-09-10T17:52:21.391378500] SELECT * FROM actor WHERE first_name LIKE '%ER'
+[2024-09-11T10:25:04.459924100] SELECT * FROM actor WHERE first_name LIKE '%ER'
+[2024-09-13T12:40:48.760889300] SELECT * FROM pizza
+[2024-09-13T12:41:51.839433900] SELECT * FROM pizza_prices
+[2024-09-13T12:44:05.460006] SHOW FULL TABLES;
+[2024-09-13T12:48:31.993720800] CREATE TABLE ingredients (
+    ingredient_id INT AUTO_INCREMENT PRIMARY KEY,
+    name VARCHAR(100) NOT NULL,
+    price DECIMAL(5, 2) NOT NULL,
+    is_vegan BOOLEAN NOT NULL,
+    is_vegetarian BOOLEAN NOT NULL
+);
+
+[2024-09-13T12:50:25.224259600] SHOW FULL TABLES
+[2024-09-13T12:50:56.863215] SELECT * FROM ingredients
+[2024-09-13T12:51:15.352431400] SELECT * FROM ingredients
+[2024-09-13T12:53:01.713572200] SELECT * FROM ingredients
+[2024-09-13T12:56:04.772756] SELECT * FROM ingredients
+[2024-09-13T12:57:20.829843400] SELECT * FROM ingredients
+[2024-09-13T12:59:30.778508600] SELECT * FROM ingredients
+[2024-09-13T13:00:20.743129800] INSERT INTO ingredients (name, price, is_vegan, is_vegetarian) VALUES
+('Tomato Sauce', 1.00, TRUE, TRUE),
+('Mozzarella Cheese', 1.50, FALSE, TRUE),
+('Pepperoni', 2.00, FALSE, FALSE),
+('Mushrooms', 1.00, TRUE, TRUE),
+('Bell Peppers', 1.00, TRUE, TRUE),
+('Olives', 1.00, TRUE, TRUE),
+('Onions', 0.75, TRUE, TRUE),
+('Chicken', 2.50, FALSE, FALSE),
+('BBQ Sauce', 1.00, TRUE, TRUE),
+('Pineapple', 1.00, TRUE, TRUE),
+('Spinach', 1.00, TRUE, TRUE),
+('Feta Cheese', 1.50, FALSE, TRUE),
+('Truffle Oil', 2.50, FALSE, TRUE),
+('Bacon', 2.00, FALSE, FALSE),
+('Sausage', 2.00, FALSE, FALSE),
+('Garlic', 0.75, TRUE, TRUE),
+('Parmesan Cheese', 1.50, FALSE, TRUE),
+('Prosciutto', 2.50, FALSE, FALSE),
+('Artichokes', 1.50, TRUE, TRUE),
+('Sun-Dried Tomatoes', 1.00, TRUE, TRUE),
+('Pesto', 1.50, TRUE, TRUE),
+('Ricotta Cheese', 1.50, FALSE, TRUE),
+('Goat Cheese', 1.50, FALSE, TRUE),
+('Red Onion', 0.75, TRUE, TRUE),
+('Zucchini', 1.00, TRUE, TRUE),
+('Chorizo', 2.00, FALSE, FALSE),
+('Ham', 2.00, FALSE, FALSE),
+('Anchovies', 1.50, FALSE, FALSE),
+('Capers', 1.00, TRUE, TRUE),
+('Gorgonzola Cheese', 1.50, FALSE, TRUE),
+('Cheddar Cheese', 1.50, FALSE, TRUE),
+('Avocado', 1.50, TRUE, TRUE),
+('Basil', 0.75, TRUE, TRUE),
+('Arugula', 1.00, TRUE, TRUE)
+[2024-09-13T13:01:26.122206300] SELECT * FROM ingredients
+[2024-09-13T15:59:43.530170900] SELECT * FROM ingredients

@@ -1,6 +1,5 @@
 package com.example.dbproject;
 
-
 import java.io.*;
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -11,28 +10,43 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
-public class DatabaseManager {
-    private static final String DB_URL = "jdbc:mysql://localhost:3306/sakila";
+public class Repository {
+    private static final String DB_URL = "jdbc:mysql://localhost:3306/pizzarestaurant";
     private static final String USER = "root";
     private static final String PASS = "1810";
     private static final String LOG_FILE = "query_log.txt";
 
     private List<String> queryLog = new ArrayList<>();
-    private static DatabaseManager instance;
+    private static Repository instance;
 
-    private DatabaseManager() {
+    private Repository() {
         // Load existing logs from the file
         loadQueryLog();
     }
 
-    public static synchronized DatabaseManager getInstance() {
+    public static synchronized Repository getInstance() {
         if (instance == null) {
-            instance = new DatabaseManager();
+            instance = new Repository();
         }
         return instance;
     }
 
-    public void fetchData(String query) {
+    public void executeQuery(String query) {
+        String[] queries = query.split(";"); // Split the query into individual statements
+        for (String individualQuery : queries) {
+            individualQuery = individualQuery.trim(); // Trim extra spaces and new lines
+            if (!individualQuery.isEmpty()) { // Skip empty queries
+                if (individualQuery.toUpperCase().startsWith("SELECT") || individualQuery.toUpperCase().startsWith("SHOW")) {
+                    fetchData(individualQuery);
+                } else {
+                    executeUpdate(individualQuery);
+                }
+            }
+        }
+    }
+
+    // For SELECT queries
+    private void fetchData(String query) {
         Connection conn = null;
         Statement stmt = null;
         ResultSet rs = null;
@@ -69,6 +83,43 @@ public class DatabaseManager {
         } finally {
             try {
                 if (rs != null) rs.close();
+                if (stmt != null) stmt.close();
+                if (conn != null) conn.close();
+            } catch (SQLException se) {
+                se.printStackTrace();
+            }
+        }
+    }
+
+    // For INSERT, UPDATE, DELETE queries
+    private void executeUpdate(String sql) {
+        Connection conn = null;
+        Statement stmt = null;
+
+        long startTime, endTime;
+
+        try {
+            // Measure time to connect to the database
+            startTime = System.currentTimeMillis();
+            conn = DriverManager.getConnection(DB_URL, USER, PASS);
+            endTime = System.currentTimeMillis();
+            System.out.println("Time to connect to the database: " + (endTime - startTime) + " ms");
+
+            stmt = conn.createStatement();
+
+            // Measure time to execute the statement
+            startTime = System.currentTimeMillis();
+            int affectedRows = stmt.executeUpdate(sql);
+            endTime = System.currentTimeMillis();
+            System.out.println("Time to execute the statement: " + (endTime - startTime) + " ms");
+
+            // Log the statement with timestamp
+            logQuery(sql);
+            System.out.println("Affected rows: " + affectedRows);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            try {
                 if (stmt != null) stmt.close();
                 if (conn != null) conn.close();
             } catch (SQLException se) {
@@ -155,4 +206,3 @@ public class DatabaseManager {
         System.out.println("Query log cleared.");
     }
 }
-
